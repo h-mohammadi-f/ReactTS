@@ -1,0 +1,23 @@
+1- Creating a .Net project and using EF. 
+2- dotnet new sln to create a solution
+3- dotnet new wepapi -n API to create an API folder with relevant code for us. But because I wanted .net 5, I used below command: 
+dotnet new webapi --framework "net5.0" -n API
+4- dotnet new classlib  --framework "net5.0" -n Application
+5- dotnet new classlib  --framework "net5.0" -n Domain
+6- dotnet new classlib  --framework "net5.0" -n Persistence
+7-dotnet sln add API/API.csproj & Application & Domain & Persistence
+8-cd API then dotnet add reference ../Application
+8-Add ref to domain and Persistence for pplication. 
+9- add ref to domain for Persistence.
+10- In domain project delete class1 class and add another class witht the name of Activity
+11- install Microsoft.EntityFrameworkCore.SqlServer on Persistence project.
+12- Add DataContext to Persistence project. 
+13- Derived class from DbContext
+14- Add dbcontext into services on startup.cs file in api project. 
+15- For adding EF we need tool that we check with this command: dotnet tool list --global.
+16- We installed Microsoft.EntityFrameworkCore.Design on API project
+17- we use this command to make migration enable:  dotnet ef migrations add InitialCreate -p Persistence -s API
+18- Did the changes in the program file of API project.
+19- For seeding database, we created a new class in Persistence with the name of seed.cs and then we call seed method from Program.
+20- Add a BaseApiController.cs to Controllers folder in API. 
+21- Then we added ActvitiesController. 
