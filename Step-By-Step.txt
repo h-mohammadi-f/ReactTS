@@ -42,3 +42,25 @@ it is low level.
   7- import ths line above of the index.tsx : import 'semantic-ui-css/semantic.min.css'
   8- Now we can use semantic ui components. Like Headerm List
 ****************************************** End Of Section 3: UI Skeleton ******************************************************
+1- Looking at clean architecture pattern. CQRS + Mediator pattern
+2- Command and Query Responsibility Segregation : Commands do something and Queries just do query DB.
+3- Add mediator package to our Application project.  MediatR.Extensions.Microsoft.DependencyInjection
+4- In the application project create a folder with the name of activities. 
+5- Add a class witht hename of list and add in the class a query class and a handler class implement interface. 
+6- Inject datacontext into Handler class. 
+7- In the activities controller now we should inject our mediator instead of datacontext. 
+8- We add mediator service into startup class.
+9- wE MOVED MEDIATOR INJECTING TO OUR BASE API.
+10- We added detail, create , edit into mediator and add them to ontroller as well.
+11- Now we want to add automapper. So when code get an object and wants to update it, we do not need to write every property.
+12- Open nuget galler and search for automapper and install it on application project. 
+AutoMapper.Extensions.Microsoft.DependencyInjection
+13- in the application project create a new folder and call it core. 
+14- Then we add mappingprofile class inherited from profile class from AutoMapper. 
+15- In the onstructor we mapp our classes.
+16- We add this MappingProfile class to our services in the startup method. 
+17- We inject it into handler classes in application project and use it in edit method. 
+18- Add an extention to house keeping the startup class.
+****************************************** End Of Section 4: UI Skeleton ******************************************************
+
+
