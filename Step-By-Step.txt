@@ -61,6 +61,23 @@ AutoMapper.Extensions.Microsoft.DependencyInjection
 16- We add this MappingProfile class to our services in the startup method. 
 17- We inject it into handler classes in application project and use it in edit method. 
 18- Add an extention to house keeping the startup class.
-****************************************** End Of Section 4: UI Skeleton ******************************************************
+****************************************** End Of Section 4: CQRS,Mediator,AutoMapper *********************************************
+1- Create a CRUD application in React. Folder structure, Typescript Interfaces, Semantiic UI, Basic Forms
+2- For our client app folder structure we added 2 folder in src. app=> normal codes features=>specific components
+3- move app.css,index.css into app/layout and rename index.css to styles.css
+4- adding activity interface. From swagger get the json and use json to ts tool to convert it to ts.
+5- in the app folder create another folder with the name of models
+6- add Activity.ts and paste the model in there.
+7- How we use?In app file where we are using state, we set the type.Now we can remove any from map section. (smart)
+8- Add Navbar: From semantic ui will find a navbar. In app/layout we added NavBar.tsx. Use Menu to create a NavBar.
+9- For images we added a folder with the name of assets in the public folder. And put files there (logo)
+10- we added navbar to our app component. To remove extra div we ued Fragment.
+11- Creating an activity dashboard. In app/features we created a new folder with the name of activities.
+12- We added activitiesdashboard and its interface to import data from parent to child.
+13-We added activityList component.
+14- We added a folder to activity with the name of detials. add ActivityDetails component. 
+15- For genereate unique id from UI we need to use uuid. npm install uuid
+then if we have error for import v4 as uuid we should use: npm i --save-dev @types/uuid
+****************************************** End Of Section 5: UI:CRUD *********************************************
 
 
