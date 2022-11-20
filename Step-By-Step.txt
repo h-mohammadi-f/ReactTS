@@ -79,5 +79,14 @@ AutoMapper.Extensions.Microsoft.DependencyInjection
 15- For genereate unique id from UI we need to use uuid. npm install uuid
 then if we have error for import v4 as uuid we should use: npm i --save-dev @types/uuid
 ****************************************** End Of Section 5: UI:CRUD *********************************************
+1- we will configure Axios to send data from Client side to API. Using genereic types by TS. Axios interceptors. 
+2- We are looking to centeralised our axios request. So in the APP folder we added an API folder. 
+3- Add a file with the name of agent.ts. We implenet all our api calls in this file. 
+4- Adding fake delay: Add sleep into agent file. Use axios interceptors for response to make delay.
+5- Add LoadingComponent.tsx into app/layout folder. Use dimmer and loading from semantic ui. 
+6- Implementing loading for delete button to show only for one button in list component.
+****************************************** End Of Section 6: Connect to API, loading animation ********************
+
+
 
 
