@@ -86,7 +86,23 @@ then if we have error for import v4 as uuid we should use: npm i --save-dev @typ
 5- Add LoadingComponent.tsx into app/layout folder. Use dimmer and loading from semantic ui. 
 6- Implementing loading for delete button to show only for one button in list component.
 ****************************************** End Of Section 6: Connect to API, loading animation ********************
-
+1- MobX : introduce state management. We need to Mobx React Lite. Centeral state management.
+2- Why MobX? It is easy with TS. Simpler to read. 
+3- MobX use observables. when state changes we can react to that state. 
+4= MobX uses classes to save states. 
+5- MobX has action and computed property. it has reaction to ract to changes. 
+6- When we use MobX, we will create a store which all componentes will have access tohis store.
+7- Settin up MobX: npm install mobx mobx-react-lite
+8- In the app folder create a new folder with the name of sotres.
+9- With MobX we can use different stores instead of one store which is leagcy of react. 
+10- Create activityStore.ts in the store folder. Write code.
+11- Add store.ts and add required code.
+12- In the index.tsx we add our storecontext.prvider tag around app. 
+13- We started to clean up app.tsx component. 
+14- For making or component observable we should chagen export default of them is observer. 
+15- Start to refactoring code to export states from app.tsx to activityStpre. 
+16- We are going to use maps instead of array for activitties.
+****************************************** End Of Section 7: Change state manager to mobx and activities array to map ********************
 
 
 
