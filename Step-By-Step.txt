@@ -103,6 +103,12 @@ then if we have error for import v4 as uuid we should use: npm i --save-dev @typ
 15- Start to refactoring code to export states from app.tsx to activityStpre. 
 16- We are going to use maps instead of array for activitties.
 ****************************************** End Of Section 7: Change state manager to mobx and activities array to map ********************
-
-
-
+1- Why do we need a router? React-Router and React-Router API and history. 
+2- React Router. npm install react-router-dom
+4- inside the app folder I created router folder. 
+5- I created the Routes file and develop it. 
+6- For our application to use router we need to replace it with app in index.tsx
+7- for testing routing we need some pages to route. I added home in features.
+8- We need a router outlet. We swaped         <ActivityDashboard /> in app.tsx with <Outlet/>
+9- We move activities loading from home page ( app.tsx) to activities page.
+10- Create navlinks in navbar

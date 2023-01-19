@@ -1,7 +1,6 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
 import { Activity } from "../models/Activity";
-import { v4 as uuid } from "uuid";
 
 export default class ActivityStore {
   activityRegistry = new Map<string, Activity>();
@@ -9,7 +8,7 @@ export default class ActivityStore {
   selectedActivity: Activity | undefined = undefined;
   editMode = false;
   loading = false;
-  loadingInitial = true;
+  loadingInitial = false;
 
   constructor() {
     // makeObservable(this, {
@@ -30,6 +29,8 @@ export default class ActivityStore {
 
   //because we use it in effect and that function returns promise, we can make this function async
   LoadActivitites = async () => {
+    this.setLoadingInitial(true);
+
     try {
       const localActivities = await agent.Activities.list();
       //because we want to change immutable object and using asyn, we need to put the code in runinaction.
@@ -43,10 +44,7 @@ export default class ActivityStore {
 
       //because we do not want to use run in action, we create another method to update loadingInitial.
       localActivities.forEach((activity) => {
-        activity.date = activity.date.split("T")[0];
-        //we want to use map
-        //this.activities.push(activity); //we can do it in Mobx because it can manpulate immutable but redux no.
-        this.activityRegistry.set(activity.id, activity);
+        this.setActivity(activity);
       });
       this.setLoadingInitial(false);
     } catch (error) {
@@ -55,31 +53,59 @@ export default class ActivityStore {
     }
   };
 
+  private setActivity = (activity: Activity) => {
+    activity.date = activity.date.split("T")[0];
+    //we want to use map
+    //this.activities.push(activity); //we can do it in Mobx because it can manpulate immutable but redux no.
+    this.activityRegistry.set(activity.id, activity);
+  };
+
+  loadActivity = async (id: string) => {
+    let activity = this.getActivity(id);
+    if (activity) {
+      this.selectedActivity = activity;
+    } else {
+      this.setLoadingInitial(true);
+      try {
+        activity = await agent.Activities.details(id);
+        this.setActivity(activity);
+        this.selectedActivity = activity;
+        this.setLoadingInitial(false);
+      } catch (error) {
+        console.log(error);
+        this.setLoadingInitial(false);
+      }
+    }
+  };
+
+  private getActivity = (id: string) => {
+    return this.activityRegistry.get(id);
+  };
+
   setLoadingInitial = (state: boolean) => {
     this.loadingInitial = state;
   };
 
-  selectActivity = (id: string) => {
-    // this.selectedActivity = this.activities.find((x) => x.id === id);
-    this.selectedActivity = this.activityRegistry.get(id);
-  };
+  // selectActivity = (id: string) => {
+  //   // this.selectedActivity = this.activities.find((x) => x.id === id);
+  //   this.selectedActivity = this.activityRegistry.get(id);
+  // };
 
-  cancelSelectedActivity = () => {
-    this.selectedActivity = undefined;
-  };
+  // cancelSelectedActivity = () => {
+  //   this.selectedActivity = undefined;
+  // };
 
-  openForm = (id?: string) => {
-    id ? this.selectActivity(id) : this.cancelSelectedActivity();
-    this.editMode = true;
-  };
+  // openForm = (id?: string) => {
+  //   id ? this.selectActivity(id) : this.cancelSelectedActivity();
+  //   this.editMode = true;
+  // };
 
-  closeForm = () => {
-    this.editMode = false;
-  };
+  // closeForm = () => {
+  //   this.editMode = false;
+  // };
 
   createActivity = async (activity: Activity) => {
     this.loading = true;
-    activity.id = uuid();
     try {
       await agent.Activities.create(activity);
       runInAction(() => {
@@ -127,7 +153,7 @@ export default class ActivityStore {
       runInAction(() => {
         // this.activities = [...this.activities.filter((a) => a.id !== id)];
         this.activityRegistry.delete(id);
-        if (this.selectedActivity?.id === id) this.cancelSelectedActivity();
+        // if (this.selectedActivity?.id === id) this.cancelSelectedActivity();
         this.loading = false;
       });
     } catch (error) {

@@ -1,30 +1,34 @@
 import { observer } from "mobx-react-lite";
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Button, Form, Segment } from "semantic-ui-react";
+import LoadingComponent from "../../../app/layout/LoadingComponent";
 import { useStore } from "../../../app/stores/store";
+import { v4 as uuid } from "uuid";
 export default observer(function ActivityForm() {
   const { activityStore } = useStore();
-  
-  const activity = activityStore.selectedActivity;
-
-  const initialState = activity
-    ? activity
-    : {
-        id: "",
-        title: "",
-        date: "",
-        description: "",
-        category: "",
-        city: "",
-        venue: "",
-      };
-
-  const [enteredActivity, setEnteredActivity] = useState(initialState);
-
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [enteredActivity, setEnteredActivity] = useState({
+    id: "",
+    title: "",
+    date: "",
+    description: "",
+    category: "",
+    city: "",
+    venue: "",
+  });
   function handleSubmit() {
-    enteredActivity.id
-      ? activityStore.updateActivity(enteredActivity)
-      : activityStore.createActivity(enteredActivity);
+    if (enteredActivity.id) {
+      activityStore.updateActivity(enteredActivity).then(() => {
+        navigate(`/activities/${enteredActivity.id}`);
+      });
+    } else {
+      enteredActivity.id = uuid();
+      activityStore.createActivity(enteredActivity).then(() => {
+        navigate(`/activities/${enteredActivity.id}`);
+      });
+    }
   }
 
   function handleInputChange(
@@ -33,6 +37,39 @@ export default observer(function ActivityForm() {
     const { name, value } = event.target;
     setEnteredActivity({ ...enteredActivity, [name]: value });
   }
+
+  useEffect(() => {
+    if (id === undefined) {
+      setEnteredActivity({
+        id: "",
+        title: "",
+        date: "",
+        description: "",
+        category: "",
+        city: "",
+        venue: "",
+      });
+    } else {
+      activityStore.loadActivity(id).then(() => {
+        const activity = activityStore.selectedActivity;
+        const initialState = activity
+          ? activity
+          : {
+              id: "",
+              title: "",
+              date: "",
+              description: "",
+              category: "",
+              city: "",
+              venue: "",
+            };
+        setEnteredActivity(initialState);
+      });
+    }
+  }, [id, setEnteredActivity, activityStore]);
+
+  if (activityStore.loadingInitial)
+    return <LoadingComponent content="loading activity..." />;
 
   return (
     <Segment clearing>
@@ -82,7 +119,9 @@ export default observer(function ActivityForm() {
           content="Submit"
         />
         <Button
-          onClick={activityStore.closeForm}
+          // onClick={activityStore.closeForm}
+          as={Link}
+          to="/activities"
           floated="right"
           type="button"
           content="Cancel"

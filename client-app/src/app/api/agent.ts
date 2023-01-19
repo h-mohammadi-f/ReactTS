@@ -11,7 +11,7 @@ axios.defaults.baseURL = "http://localhost:5000/api";
 
 axios.interceptors.response.use(async (response) => {
   try {
-    await sleep(2000);
+    await sleep(200);
     return response;
   } catch (error) {
     console.log(error);
@@ -25,7 +25,7 @@ const requests = {
   get: <T>(url: string) => axios.get<T>(url).then(responseBody),
   post: <T>(url: string, body: {}) =>
     axios.post<T>(url, body).then(responseBody),
-  put: <T>(url: string, body: {}) => axios.put<T>(url,body).then(responseBody),
+  put: <T>(url: string, body: {}) => axios.put<T>(url, body).then(responseBody),
   del: <T>(url: string) => axios.delete<T>(url).then(responseBody),
 };
 
@@ -36,7 +36,7 @@ const Activities = {
     requests.post<Activity>("/activities", activity),
   update: (activity: Activity) =>
     requests.put<Activity>(`/activities/${activity.id}`, activity),
-  delete: (id: string) => requests.del<Activity>(`/activities/${id}`), 
+  delete: (id: string) => requests.del<Activity>(`/activities/${id}`),
 };
 
 const agent = {
