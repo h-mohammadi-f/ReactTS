@@ -112,3 +112,9 @@ then if we have error for import v4 as uuid we should use: npm i --save-dev @typ
 8- We need a router outlet. We swaped         <ActivityDashboard /> in app.tsx with <Outlet/>
 9- We move activities loading from home page ( app.tsx) to activities page.
 10- Create navlinks in navbar
+11- Difference between navlink and link is that navlink 
+****************************************** End Of Section 8: Routing **********************************************************************
+1- we used reduce function to group activities in the activitylist component.
+2- Install react-calendar to use calendar. npm install react-calendar and then npm install @types/react-calendar
+3- Then add into index.tsx : import 'react-calendar/dist/Calendar.css' 
+****************************************** End Of Section 9: Styling **********************************************************************
