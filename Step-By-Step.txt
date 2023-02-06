@@ -118,3 +118,16 @@ then if we have error for import v4 as uuid we should use: npm i --save-dev @typ
 2- Install react-calendar to use calendar. npm install react-calendar and then npm install @types/react-calendar
 3- Then add into index.tsx : import 'react-calendar/dist/Calendar.css' 
 ****************************************** End Of Section 9: Styling **********************************************************************
+1- Error Handling with fluent api. 
+2- Install FluentValidation.AspNetCore from nuget gallery on application
+3- create a validator class into application project for activity validator.
+4- In CQRS pattern we should try to not put our exception handling on the controller side. We should put them in the handler classes.
+5- We created the Result class in core folder to return it from handler to api controller.
+6- To have a middle ware for our exception handler we added the exception middleware class and add it into program pipeline.
+7- npm install react-toastify on the client app.to show error messages. 
+8- Add to the head of app.tsx: <ToastContainer position="bottom-right" hideProgressBar theme="colored" />
+9- then add import "react-toastify/dist/ReactToastify.min.css"; to index.tsx
+10- add axios interceptor to handle exceptions.
+ 
+
+
