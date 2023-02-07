@@ -128,6 +128,23 @@ then if we have error for import v4 as uuid we should use: npm i --save-dev @typ
 8- Add to the head of app.tsx: <ToastContainer position="bottom-right" hideProgressBar theme="colored" />
 9- then add import "react-toastify/dist/ReactToastify.min.css"; to index.tsx
 10- add axios interceptor to handle exceptions.
- 
+ ****************************************** End Of Section 10: Error Handling **********************************************************************
+1- Learn to use Formik. Validation with Formik and Yup. 
+2- One benefit of Formik is to create reuseable forms. 
+3- Install formik: npm install formik (Then we added it into activity form)
+4- For validation we need to install Yup. npm install yup and then npm install @types/yup --save-dev
+5- we added a MyTextInput component to reuse it. 
+6- For date picker we will use react date picker component. npm install react-datepicker and then 
+npm install @types/react-datepicker --save-dev
+7- then we need to add css for react date picker into index file. 
+8- To use type safety for dates, we need to install date-fns. First of all we use the below command to find the version 
+which date picker is using: npm ls date-fns the we use the version to install it: npm install date-fns@2.29.3
+ ****************************************** End Of Section 11: Formik **********************************************************************
+
+
+
+
+
+
 
 
