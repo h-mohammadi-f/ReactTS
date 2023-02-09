@@ -140,6 +140,56 @@ npm install @types/react-datepicker --save-dev
 8- To use type safety for dates, we need to install date-fns. First of all we use the below command to find the version 
 which date picker is using: npm ls date-fns the we use the version to install it: npm install date-fns@2.29.3
  ****************************************** End Of Section 11: Formik **********************************************************************
+1- ASPNET Core Identity, JWT Token Authentication, Login/Register, Authenticate Requests
+2- We want to add Identity to our application. We will Identity to our API project. The API should Authenticate our users. 
+3- The API should generate token for us to give to our users. 
+4- In the Domain Project, add a class with the name of AppUser. We should derived this class from IdentityUser of
+Microsoft Identity Core name space. For this we need to add a package to our project.
+5- From nuget galler install ASP.NET Core Identity provider that uses Entity Framework Core. to Domain. 
+6-Now we want to make project to scafold needed tables for Identity in DB. (Creating IdentityDbContext)
+7- In DataContext class we change the parent class to IdentityDbContext and give the AppUser as generic type. 
+we need to install Microsoft AspNetCore Identity to this project(Persistence) as well.
+8- Then we should add migration by below command in root directory of our projects: 
+dotnet ef migrations add IdentityAdded -p Persistence -s API
+9- We need to configure Identity in our startup class. We will get a seperate extension to add our identity configs.
+10- In API/Extensions folder we added a new class with the name of IdentityServiceExtensions.
+11- then we add services.AddIdentityServices(_config); to our startup class.
+12- We need to update the seed to create some users for us. 
+13- We added user manager into input parameters of seed data and then we added it from program.cs class.
+14- Then we run API project with dotnet run command and the tables and users will add to our DB. 
+15- Now we wnat to see how we can login. 
+16- We created a folder in our API project with the name of DTOs. User, Login, Register
+17- We want to create an account controller. 
+18- in our Controllers folder we create a new c# class with the name of AccountController
+19- JWT ( JSON Web Token) We want to create a service in our API to provide JWT for us. 
+20- We create a new folder in our API folder and call it Services. 
+21- Create a new class with the name of TokenService. 
+22- We need to install nuget package in our API project: System.IdentityModel.Tokens.Jwt
+23- When we created createToken method, we will use it in our account controller.
+24- We need to add a service in our service in our IdentityServiceExtensions
+            services.AddScoped<TokenService>(); 
+25- when our http request comes in, token service will create a new instance and when http request is finished 
+it will dispose it. 
+26- Now we can inject it into our account controller. 
+27- We inject it and we use it to generate the Token. 
+28- Now we want to add Token check in out API for when a request is receiveing. 
+29- We need another package because we need to Authenticate the token which we are passing in the header of each request.
+30- Install Microsoft.AspNetCore.Authentication.JwtBearer on API project. 
+31- we configure service.addauthentication in identity extension service. 
+32- Then we add middleware to our startup class exactly before useAuthorization:
+            app.UseAuthentication();
+33- Then for each method in controller that we add authorize it will check the header for token. 
+34- add a key in our appsetting development json file for token.
+35- Autthorization Policy: We want to make all of our methods authrise instead of account controller. 
+36- we need to add some options to addcontroller service in startup file.
+37- add     [AllowAnonymous] to account controller. 
+38- Creating the registration method. 
+39- Add data anotations to registerdto to vaildate it. 
+40- Creating the current user. add to account controller getcurrentuser. 
+41- We moved AllowAnonymous from top to each method in account controller.
+ ****************************************** End Of Section 12: Identity **********************************************************************
+
+
 
 
 
