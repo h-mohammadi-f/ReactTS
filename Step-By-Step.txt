@@ -188,6 +188,13 @@ it will dispose it.
 40- Creating the current user. add to account controller getcurrentuser. 
 41- We moved AllowAnonymous from top to each method in account controller.
  ****************************************** End Of Section 12: Identity **********************************************************************
+1- Client side login and register. 
+2- Axios interceptors, MobX reactions, Form submission errors, Modals.
+3- add users folder into features. 
+4- add login form.
+5- add user.ts into model folder. 
+6- add Account into our agent.
+7- creating user store. 
 
 
 
