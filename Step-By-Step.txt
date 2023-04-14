@@ -195,6 +195,63 @@ it will dispose it.
 5- add user.ts into model folder. 
 6- add Account into our agent.
 7- creating user store. 
+ ****************************************** End Of Section 13: Client Side Login *************************************
+1- EF Relationships, Loading related entity, AutoMapper queryable extensions and adding an infrastructure. 
+2- Implimenting a many-to-many Relationships between 2 entity.
+3- On activity class we added ICollection<AppUser> and in App user we add ICollection<Activity>
+4- Because we wanted to add extra field in our middle table we created a new class for joint table. 
+5- We replace the ICollection in Appuser and Activity to mention new table. 
+6- Now we need to add some configurations in our DbContext.
+7- Added a new db et in data context and override the on model creating.
+8- We added a new project as infrastructure to handle add user to activity. in the root folder:
+   dotnet new classlib -n Infrastructure 
+9- execute: dotnet sln add Infrastructure
+10- add a reference of Application to Infrastructure: We should go to Infrastructure folder and execute: 
+dotnet add reference ../Application
+11- Then API project should have access to Infrastructure. So, in the API folder we execute below command: 
+dotnet add reference ../Infrastructure
+12- In Application project we add a new folder with the name of interfaces.
+13- Add a new interface in the interfaces folder with the name od IUserAccessor.
+14- Delete the class1 from infrastructure and add a folder with the name of Security.
+15- Add a class with the name of UserAccessor and derived from IUserAccessor.
+16- for making infrastrcuture refrences, we go to root folder and execute dotnet restore.
+17- So now we have an interface and a service to get username. We need to add them to them API services.
+18- We open application service extensions.
+            services.AddHttpContextAccessor();
+            services.AddScoped<IUserAccessor,UserAccessor>();
+19- Now we should update create activity handler. 
+20- inside create class we add useaccessor to constructoe.
+21- For loading our related data to activity we should tell EF to return our data. 
+22- The Lazy Loading is not efficient. We use Eagrly loading. We use .Include in our queries. 
+23- We go to our list handler and add include queries.
+24- Because we need infinite loop we need to shape our data.
+25- in application/activities folder we add  ActivityDto.
+26- We add profiles folder and class in Application project.
+27- We add property of profile to ActivityDto and hostusername. 
+28- in list instead of returning Activity, now we should return ActivityDto. 
+29- For creating a list of activity dto automatically, we will use automapper.
+30- In application/core we have mappingprofile. we added a new property.    
+         CreateMap<Activity, ActivityDto>();
+31- we add IMapper to handler list class. and we mapp acticites to activity dto in Handle class.
+32- To config automapper to return profiles we config in in automapper. 
+33- Because we want to make our queries which are going to DB to bemore efficient, instead of eager loading, 
+we are going to use projection. 
+34- We changed details to use activitydto and automaper projection as well. 
+35- we want to give the host permisiion to canncel the activity. So we annd to add property.
+36- we added a new boolean to activity class witht he name of IsCanceled and add migration. 
+dotnet ef migrations add AddCancelledProperty -p Persistence -s API
+37- We added it to activitydto as well. 
+38- To implement cancelling, remove from activity, and join activity, we addded UpdateAttendance handler to activites.
+39- Then we go to controller and add a new end point for this functionality. 
+40- We want to add a new auth policy to check if the activity is for host, then he can edit it only.
+41- In the Infrastructure project and ecurity folder, we created IsHostRequirement class.
+42- Then in identity service extension we need to add this new class in our services.
+43- Then we add a new end point to our activity controller.
+44- Change the seed class to all activities have attendees. Then we drop the database and re run the application. 
+ ****************************************** End Of Section 14: EntityFramework Relationships *******************************
+ 1- In this section we will work on frontend for client side attendance.
+ 
+
 
 
 
