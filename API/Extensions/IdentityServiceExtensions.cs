@@ -1,7 +1,9 @@
 using System.Text;
 using API.Services;
 using Domain;
+using Infrastructure.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -19,8 +21,8 @@ namespace API.Extensions
             {
                 opt.Password.RequireNonAlphanumeric = false;
                 //to check unique email in registration
-                opt.User.RequireUniqueEmail=true;
-                 
+                opt.User.RequireUniqueEmail = true;
+
             })
             .AddEntityFrameworkStores<DataContext>();
             //it was like this before adding JWT token. 
@@ -39,6 +41,16 @@ namespace API.Extensions
                     ValidateAudience = false
                 };
             });
+
+            services.AddAuthorization(opt =>
+            {
+                opt.AddPolicy("IsActivityHost", policy =>
+                {
+                    policy.Requirements.Add(new IsHostRequirement());
+                });
+            });
+
+            services.AddTransient<IAuthorizationHandler, IsHostRequirementHandler>();
 
             //when our http request comes in, token service will create a new instance and generates token
             //when http request is finished it will dispose it. 
