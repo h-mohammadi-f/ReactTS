@@ -250,7 +250,22 @@ dotnet ef migrations add AddCancelledProperty -p Persistence -s API
 44- Change the seed class to all activities have attendees. Then we drop the database and re run the application. 
  ****************************************** End Of Section 14: EntityFramework Relationships *******************************
  1- In this section we will work on frontend for client side attendance.
- 
+ 2- First step is to create ActivityListItemAttendee component in the front end application. (src/features/activites/dashboard)
+ 3- Then in the activityListItem component in the secondary section we add this new component.
+ 4- For adding user profiles in the model folder in client-app we add profile.ts file.
+ 5- Then we go to activity.ts and add some new properties. 
+ 6- Then in the ActivityListItemAttendee we add props and call it attendees as type prfile array.
+ 7- Now we want to show attendees in the side bar component.
+ 8- We updated to sidebar, header with the extra information and fields that we added to the activity.ts and fill them in stroe.
+ 9- For joining to an activity, in the agent file we added a new endpoint to call api\activities\{id}\attend controller.
+ 10- Then we add a new method in activityStore to use this endpoint. 
+ 11- in the ActivityDetailedHeader we use this method in the OnClick join and cancell activity.
+ 12- Now we want to update the create and edit pages of the activity. 
+ 13- For cancelling activity in store we create cancel activity toggle method. 
+ 14- For adding profile on hover over mouse, in the feature folder we added a new folder by name profile.
+ 15- Then we add profilecard component and the we use it in activitylistitemattendee.
+  ****************************************** End Of Section 15: Client Side Attendance *******************************
+
 
 
 

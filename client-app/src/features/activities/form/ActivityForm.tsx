@@ -1,32 +1,24 @@
 import { observer } from "mobx-react-lite";
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Button, Header, Segment } from "semantic-ui-react";
 import LoadingComponent from "../../../app/layout/LoadingComponent";
 import { useStore } from "../../../app/stores/store";
 import { v4 as uuid } from "uuid";
-import { Form, Formik, ErrorMessage } from "formik";
+import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import MyTextInput from "../../../app/common/form/MyTextInput";
 import MyTextArea from "../../../app/common/form/MyTextArea";
 import MySelectInput from "../../../app/common/form/MySelectInput";
 import { categoryOptions } from "../../../app/common/options/categoryOptions";
 import MyDateInput from "../../../app/common/form/MyDateInput";
-import { Activity } from "../../../app/models/Activity";
+import { ActivityFormValues } from "../../../app/models/Activity";
 
 export default observer(function ActivityForm() {
   const { activityStore } = useStore();
   const { id } = useParams();
   const navigate = useNavigate();
-  const [enteredActivity, setEnteredActivity] = useState<Activity>({
-    id: "",
-    title: "",
-    date: null,
-    description: "",
-    category: "",
-    city: "",
-    venue: "",
-  });
+  const [enteredActivity, setEnteredActivity] = useState<ActivityFormValues>(new ActivityFormValues());
 
   const validationSchema = Yup.object({
     title: Yup.string().required("The activity title is required"),
@@ -37,7 +29,7 @@ export default observer(function ActivityForm() {
     city: Yup.string().required(),
   });
 
-  function handleFormSubmit(activity: Activity) {
+  function handleFormSubmit(activity: ActivityFormValues) {
     if (enteredActivity.id) {
       activityStore.updateActivity(activity).then(() => {
         navigate(`/activities/${activity.id}`);
@@ -72,7 +64,7 @@ export default observer(function ActivityForm() {
       activityStore.loadActivity(id).then(() => {
         const activity = activityStore.selectedActivity;
         const initialState = activity
-          ? activity
+          ? new ActivityFormValues(activity)
           : {
               id: "",
               title: "",
@@ -120,7 +112,7 @@ export default observer(function ActivityForm() {
             <MyTextInput placeholder="Venue" name="venue" />
             <Button
               disabled={isSubmitting || !isValid || !dirty}
-              loading={activityStore.loading}
+              loading={isSubmitting}
               floated="right"
               positive
               type="submit"
