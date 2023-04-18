@@ -289,6 +289,36 @@ a class for the result which comes from cloudinary. Because Application does not
 19- We changed activities to retunr attendees dto instead of profile.
 20- We updatethe MappingProfile class to map new changes. 
 ****************************************** End Of Section 16: Client Side Attendance *******************************
+1- Adding a prfile page, displaying user, adding a photo upload widget, React dropzone for drag and drop images.
+2- In the feature/profile we add ProfilePage.tsx to show user profiles.
+3- Then we add it into Routes file. 
+4- We add prfile header
+5- We add profile content.
+6- For sending information from API to frontend we edit profile.ts file and add photos to it.
+7- Then we add to our agent file a new endpoint to get profiles from API.
+8- Then we create profile photos component and get profile from API and populae the component.
+9- For adding the upload image feature in the profilephoto component we add anew button to upload the image. 
+10- First thing is need to check if the profile is for the loged in user. 
+11- we add isCurrentUser property in profileStore and change profilephoto component to add button base on it.
+12- Create upload photo widget in the common because we want it to be general. 
+13- For Drag & Drop feature we add a react component witht hen name of ReactDropZone. 
+14- into terminal in the folder of client=app we use : npm install react-dropzone
+15- Then copy PhotoWidgetDropzone.tsx form react dropzone github example. 
+16- Change that file as we want.
+17- For resizing and cropping image we use a react component with the name of react-cropper
+18- into terminal in the folder of client=app we use : npm install react-cropper
+19- then we get PhotoWidgetCropper.tsx. 
+20- Now we want to add upload method to our agent. It is different from previous ones. Because we should send
+file thorugh form file.
+21- Then add the uploadFile in profile store and use it in profilePhoto.
+22- Add the functionality of making a photo main and delete a photo.
+23- First we need to add endpoint into agent file.
+24- Then add them into profile store and use them into profilephotos.
+****************************************** End Of Section 17: Client side photo management ******************
+
+
+
+
 
 
 
