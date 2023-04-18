@@ -271,7 +271,25 @@ dotnet ef migrations add AddCancelledProperty -p Persistence -s API
 4- The first step is open nuget gallery and look for Cloudinary and install it on infrastructure project. 
 5- Then we need to setup our project to have credentials to connect to Cloudinary.
 6- In the API project, open appsetting json file and add required keys. Becuase it is exclouded to import to git. 
-7- 
+7- For reading this congis, in the infrastructure createa class with 3 property. then in ApplicationServiceExtentions
+we add it to our service to read them: 
+            services.Configure<CloudinarySettings>(config.GetSection("Cloudinary"));
+8- Because we need to have access to the nformation which come back from cloudinary in application layer, we need to create
+a class for the result which comes from cloudinary. Because Application does not have access to infrastructure.
+9- Then we add an interface with the name of IPhotoAccessor.
+10- Then in the infrastructure we implement the IPhotoAccessor.
+11- in the API we added this implementation to services.
+12- Then we add in the domain a class for phpto. then add relationship with appusers and then add them into datacontext.
+13- Add migration to add new table.
+14- Adding photo handler to add new photo into cloud and DB.
+15- Inside Application project, and inside the photos we create a new class with the name of Add.
+16- Now its time to create the controller.
+17- then we add the related controller.
+18- We add delete image as well and controller.
+19- We changed activities to retunr attendees dto instead of profile.
+20- We updatethe MappingProfile class to map new changes. 
+****************************************** End Of Section 16: Client Side Attendance *******************************
+
 
 
 
