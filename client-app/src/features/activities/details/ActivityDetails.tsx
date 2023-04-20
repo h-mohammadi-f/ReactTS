@@ -23,16 +23,17 @@ export default observer(function ActivityDetails() {
     if (id) {
       loadActivity(id);
     }
-  }, [id, loadActivity]);
+    return () => activityStore.clearSelectedActivity();
+  }, [id, activityStore, loadActivity]);
 
   if (!activity) return <LoadingComponent />;
 
   return (
     <Grid>
       <Grid.Column width={10}>
-        <ActivityDetailedHeader activity={activity}/>
-        <ActivityDetailedInfo activity={activity}/>
-        <ActivityDetailedChat />
+        <ActivityDetailedHeader activity={activity} />
+        <ActivityDetailedInfo activity={activity} />
+        <ActivityDetailedChat activityId={activity.id} />
       </Grid.Column>
       <Grid.Column width={6}>
         <ActivityDetailedSidebar activity={activity!} />

@@ -315,6 +315,34 @@ file thorugh form file.
 23- First we need to add endpoint into agent file.
 24- Then add them into profile store and use them into profilephotos.
 ****************************************** End Of Section 17: Client side photo management ******************
+****************************************** End Of Section 18: Challenge ******************
+1- What is SignalR and how it works.
+2- For comments we created a new class in Domain.
+3- add the relation in activity class. 
+4- Add in data context and add migration. 
+5- In the application project, we createcomment folder and comment dto and create mapper.
+6- Now we need to create handler and list handler.
+8- Adding SignalR to our project.
+9- SignalR is part of our API project. Instead of using controller, we are goint to use SignalR hub as our 
+endpoints that client can connect to. 
+10- Create a new folder in API and call it SignalR.
+11- Create a new C# class in it.
+12- SignalR comes with dotnet. using Microsoft.AspNetCore.SignalR;
+13- add SignalR to our service in ApplicationServiceExtentions file : 
+            services.AddSignalR();
+14- In the startup file we say to our application where our hub is: 
+                endpoints.MapHub<ChatHub>("/chat");
+15- Authentication to SignalR. Because we do not have ability to send http Autthorization header.
+16- In IdentityServiceExtensions we add some option to JwtBearer options. 
+17- Now we are going to configure our client. 
+18- Inside src/app/model we create comment.ts.
+19- Then we need to create a mobx store specifically for our comments.
+20- For using SignalR hub connection we need to install it into client-app.
+          npm install @microsoft/signalr
+21-   Imprtant section that we need to watch it again
+****************************************** End Of Section 19: SignalR ******************
+
+
 
 
 
