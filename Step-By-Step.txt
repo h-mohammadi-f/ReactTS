@@ -341,21 +341,12 @@ endpoints that client can connect to.
           npm install @microsoft/signalr
 21-   Imprtant section that we need to watch it again
 ****************************************** End Of Section 19: SignalR ******************
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+1- Adding important feature of a social media website : Following and Followers.
+2- A join table. Add UserFollowing class to our domain. 
+3- Update DataContext for making relation ships.
+4- Adding a handler to make following and unfollowing feature.
+5- Add followers folder and class. 
+6- Add new controller: Follow. 
+7- Update the profile class. Then update the automapper.
+8- For having a list of followers or followings we need a nahndler to return a list for UserFollowing.
+9- 

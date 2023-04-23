@@ -103,6 +103,10 @@ const Profiles = {
   },
   setMainPhoto: (id: string) => requests.post(`/photos/${id}/setMain`, {}),
   deletePhoto: (id: string) => requests.del(`/photos/${id}`),
+  updateFollowing: (targetUsername: string) =>
+    requests.post(`/follow/${targetUsername}`, {}),
+  getFollowers: (username: string, predicate: string) =>
+    requests.get<Profile[]>(`/follow/${username}?predicate=${predicate}`),
 };
 
 const agent = {

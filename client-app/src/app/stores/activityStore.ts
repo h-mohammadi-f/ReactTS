@@ -247,7 +247,20 @@ export default class ActivityStore {
     }
   };
 
-  clearSelectedActivity = ()=>{
+  clearSelectedActivity = () => {
     this.selectedActivity = undefined;
-  }
+  };
+
+  updateAttendeeFollowing = (targetUsername: string) => {
+    this.activityRegistry.forEach((activity) => {
+      activity.attendees.forEach((attendee) => {
+        if (attendee.username == targetUsername) {
+          attendee.following
+            ? attendee.followersCount--
+            : attendee.followersCount++;
+          attendee.following = !attendee.following;
+        }
+      });
+    });
+  };
 }
