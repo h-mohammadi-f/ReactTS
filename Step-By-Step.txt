@@ -349,4 +349,22 @@ endpoints that client can connect to.
 6- Add new controller: Follow. 
 7- Update the profile class. Then update the automapper.
 8- For having a list of followers or followings we need a nahndler to return a list for UserFollowing.
-9- 
+****************************************** End Of Section 20: Following-Followers ******************
+1- Paging - Sorting - Filtering - IQueryable<T>
+2- Inside application/core we create a class called it paged list. 
+3- Add pagingParams class.
+4- Change the list queries in application handlers.
+5- Update Controller. 
+6- We want to add paging information into the request header which is passing to the client.
+7- Add httpextension class into extension folder. 
+8- update base api class to add pagination header to our request. 
+9- update controller to use pagination handler. 
+10- Update client. Add pagination file into client/model.
+11- Update agent axios interceptor response.
+12- for adding infinite scrolling we need the react infinite package:
+npm install react-infinite-scroller
+13- For filtering we add new class in application/activites for filtering activities. 
+14- Then update the list handler query and change the controller.
+15- 
+
+

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Core;
@@ -13,8 +14,11 @@ namespace Application.Activities
 {
     public class List
     {
-        public class Query : IRequest<Result<List<ActivityDto>>> { }
-        public class Handler : IRequestHandler<Query, Result<List<ActivityDto>>>
+        public class Query : IRequest<Result<PagedList<ActivityDto>>>
+        {
+            public ActivityParams PageParams { get; set; }
+        }
+        public class Handler : IRequestHandler<Query, Result<PagedList<ActivityDto>>>
         {
             private readonly DataContext _context;
             private readonly IMapper _mapper;
@@ -26,7 +30,7 @@ namespace Application.Activities
                 _context = context;
 
             }
-            public async Task<Result<List<ActivityDto>>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<PagedList<ActivityDto>>> Handle(Query request, CancellationToken cancellationToken)
             {
                 //Eager loading does not have efficient queries from db
                 // var activities = await _context.Activities
@@ -34,14 +38,29 @@ namespace Application.Activities
                 // .ThenInclude(u => u.AppUser)
                 // .ToListAsync(cancellationToken);
 
-                var activities = await _context.Activities
+                var query = _context.Activities
+                .Where(d => d.Date >= request.PageParams.StartDate)
+                .OrderBy(c => c.Date)
                 .ProjectTo<ActivityDto>(_mapper.ConfigurationProvider,
                  new { currentUsername = _userAccessor.GetUsername() })
-                .ToListAsync(cancellationToken);
+                .AsQueryable();
                 //projectto  doing this for us
                 // var activitiesToReturn = _mapper.Map<List<ActivityDto>>(activities);
 
-                return Result<List<ActivityDto>>.Success(activities);
+                if (request.PageParams.IsGoing && !request.PageParams.IsHost)
+                {
+                    query = query.Where(x => x.Attendees.Any(a => a.Username == _userAccessor.GetUsername()));
+                }
+
+                if (!request.PageParams.IsGoing && request.PageParams.IsHost)
+                {
+                    query = query.Where(x => x.HostUsername == _userAccessor.GetUsername());
+                }
+
+                return Result<PagedList<ActivityDto>>.Success(
+                    await PagedList<ActivityDto>.CreateAsync(query,
+                    request.PageParams.PageNumber, request.PageParams.PageSize)
+                );
             }
         }
     }
