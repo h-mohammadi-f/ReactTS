@@ -365,6 +365,7 @@ endpoints that client can connect to.
 npm install react-infinite-scroller
 13- For filtering we add new class in application/activites for filtering activities. 
 14- Then update the list handler query and change the controller.
-15- 
+****************************************** End Of Section 21: Paging, Filtering ******************
+1- 
 
 

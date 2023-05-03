@@ -13,7 +13,7 @@ const sleep = (delay: number) => {
   });
 };
 
-axios.defaults.baseURL = "http://localhost:5000/api";
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 axios.interceptors.request.use((config) => {
   const token = store.commonStore.token;
@@ -25,7 +25,9 @@ axios.interceptors.request.use((config) => {
 
 axios.interceptors.response.use(
   async (response) => {
-    await sleep(200);
+    if (process.env.NODE_ENV === "development") {
+      await sleep(200);
+    }
     const pagination = response.headers["pagination"];
     if (pagination) {
       response.data = new PaginatedResults(
@@ -120,7 +122,9 @@ const Profiles = {
   getFollowers: (username: string, predicate: string) =>
     requests.get<Profile[]>(`/follow/${username}?predicate=${predicate}`),
   getUserActivities: (username: string, predicate: string) =>
-    requests.get<UserActivity[]>(`/profiles/${username}/activities?predicate=${predicate}`),
+    requests.get<UserActivity[]>(
+      `/profiles/${username}/activities?predicate=${predicate}`
+    ),
 };
 
 const agent = {
